@@ -133,7 +133,7 @@ uv automatically creates an isolated environment and installs all required packa
 
 ### 3.2. Dataset Setup
 The dataset consists of CSV annotation files and steel surface images.
-* Due to the large dataset size (over 1 GB), this repository includes only 10 sample images to illustrate the directory structure.
+* Due to the large dataset size (over 1 GB), this repository includes only 25 sample images to illustrate the directory structure.
 * The full dataset can be downloaded from the Kaggle [Severstal Steel Defect Detection](https://www.kaggle.com/competitions/severstal-steel-defect-detection).
 
 After downloading:
@@ -173,6 +173,12 @@ project_root/
 
 
 ## 4. EDA
+
+Exploratory Data Analysis was conducted in the following notebooks:
+
+* [EDA 01 – Dataset overview and label distribution](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/steel-defect-detection-eda-01.ipynb)
+* [EDA 02 – Image analysis](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/steel-defect-detection-eda-02.ipynb)
+
 
 ### 4.1. Data Overview
 
@@ -366,6 +372,8 @@ Model Architecture:
 
 ![E1-1 Result](images/009-e1-1-result.png)
 
+Notebook link: [Experiment E1-1](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-1.ipynb)
+
 
 #### E1-6: Unfreeze 3 layer, add globalavg, Dropout, and Relu
 This experiment introduces partial fine-tuning by unfreezing the last three layers of the backbone and adds Global Average Pooling, Dropout, and ReLU to improve generalization.
@@ -386,6 +394,7 @@ Model Architecture:
 - Flatten layer: self.flatten(x)
 - Classification layer: self.fc(x)  #(5120,1024)->Dropout(0.3)->Relu->(1024,1)
 
+Notebook link: [Experiment E1-6](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-6.ipynb)
 
 
 #### E1-9: Increased Input Resolution and Data Augmentation
@@ -407,6 +416,8 @@ Model Architecture:
 - Global Average: self.globalavg(x) # (2,2)
 - Flatten layer: self.flatten(x)
 - Classification layer self.fc(x) # (5120,512)->Dropout(0.5)->Relu->(512,1)
+
+Notebook link: [Experiment E1-9](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-9.ipynb)
 
 
 #### E1-15: Final MobileNet V2 Configuration
@@ -452,6 +463,8 @@ Confusion Matrix (Validation):
 **Model Selection**
 Based on the validation results, E1-15 achieves the best overall performance, with the highest F1 score and ROC-AUC while maintaining strong recall, which is critical for defect detection tasks. Therefore, E1-15 is selected as the final MobileNet V2 configuration.
 
+Notebook link: [Experiment E1-15](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-15.ipynb)
+
 
 
 ### 5.2 Final Model 
@@ -496,6 +509,9 @@ These results confirm that using more training data significantly enhances model
 
 ![E1-15b Result](images/009-e1-15b-result.png)
 
+Notebook link: [Experiment E1-15b](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-15b.ipynb)
+
+
 
 #### Finding Best Threshold
 
@@ -533,6 +549,7 @@ Test Set Performance:
 
 These results demonstrate strong generalization and high defect detection capability of the final MobileNet V2 model on unseen data. The high F1 score and ROC-AUC demonstrate a good balance between precision and recall, while the low number of false negatives confirms the model’s effectiveness in detecting surface defects.
 
+Notebook link: [Experiment E1-15c](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-15c.ipynb)
 
 
 ## 6. Exporting Notebook to Script
@@ -587,6 +604,10 @@ After it runs, you will get a file named in the current folder:
 * stage1-E1-FINAL-model.pth
 * stage1-E1-FINAL-model.onnx
 
+
+Python script:
+* [train.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/train.py)
+* [predict.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/predict.py)
 
 
 ## 7. Deployment API and Dockerization
@@ -686,6 +707,15 @@ Expected response:
 ```
 Response:  {'statusCode': 200, 'body': '{"defect_prob": 0.9707304835319519, "defect_status": 1}'}
 ```
+
+Python script:
+* [lambda_function.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/lambda_function.py)
+* [client.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/client.py)
+* [client-serverless].py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/client-serverless.py)
+
+Docker file:
+* [dockerfile](https://github.com/mlpub/steel-defect-detection-s1/blob/main/dockerfile)
+* [-serverless](https://github.com/mlpub/steel-defect-detection-s1/blob/main/dockerfile-serverless)
 
 
 ## 8. Deploy on Google Cloud (Cloud Run)
@@ -859,6 +889,10 @@ Cloud Run logs can be viewed in the Logs Explorer:
 These logs can be used to monitor request latency, errors, and model inference behavior.
 
 
+Python script:
+* [app.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/gcp/app.py)
+* [client-gcp.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/client-gcp.py)
+
 
 
 ## 9. Future Work
@@ -878,7 +912,7 @@ Several improvements and extensions are planned to further enhance this project:
 
 4. Explore Cloud Run in More Detail
    * Optimize performance, scalability, and cost efficiency.
-   
+
 
 Overall, this future work aims to evolve the project from a proof-of-concept into a more complete and production-ready steel surface defect detection system.
 
