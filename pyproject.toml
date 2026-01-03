@@ -1,0 +1,35 @@
+[project]
+name = "steel-defect"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+
+# Base dependencies (used by Docker / Cloud Run)
+dependencies = [
+    "fastapi",  
+    "uvicorn",
+    "numpy",
+    "pydantic",
+    "pillow",
+    "onnx",
+    "onnxruntime",
+]
+
+[project.optional-dependencies]
+
+# Local development / training
+dev = [
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "requests",
+    "opencv-python-headless",
+    "torch",
+    "torchvision",
+    "onnxscript",
+    "onnxruntime-tools",
+]
+
+# docker
+docker = []
