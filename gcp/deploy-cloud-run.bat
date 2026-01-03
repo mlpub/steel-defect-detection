@@ -1,0 +1,1 @@
+gcloud run deploy steel-defect-app --source .  --region asia-southeast1  --allow-unauthenticated --set-env-vars GUNICORN_CMD_ARGS="--worker-class uvicorn.workers.UvicornWorker"
