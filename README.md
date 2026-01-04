@@ -92,9 +92,6 @@ API available at: `http://localhost:9600/predict`
 steel-defect-detection/
 │ README.md
 │ PROJECT-DETAIL.md
-│ train.py
-│ predict.py
-│ Dockerfile
 │ pyproject.toml
 │ uv.lock
 │ ...

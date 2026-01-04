@@ -29,6 +29,7 @@ dev = [
     "torchvision",
     "onnxscript",
     "onnxruntime-tools",
+    "streamlit"
 ]
 
 # docker

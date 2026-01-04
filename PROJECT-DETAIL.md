@@ -15,6 +15,7 @@
     - [4.4. Image with Multiple Defect Types](#44-image-with-multiple-defect-types)
     - [4.5. Defect Area](#45-defect-area)
     - [4.6. Color Distribution](#46-color-distribution)
+    - [4.7. Defect Center Location](#47-defect-center-location)
 - [5. Model Training, Evaluation and Parameter Tuning](#5-model-training-evaluation-and-parameter-tuning)
     - [5.1. Mobilenet V2](#51-mobilenet-v2)
     - [5.2 Final Model](#52-final-model)
@@ -28,7 +29,8 @@
     - [8.2. Install gcloud on Windows](#82-install-gcloud-on-windows)
     - [8.3. Initialize and authorize the gcloud CLI](#83-initialize-and-authorize-the-gcloud-cli)
     - [8.4. Deploy to Cloud Run](#84-deploy-to-cloud-run)
-- [9. Future Work](#9-future-work)
+- [9. Web UI with Streamlit](#9-web-ui-with-streamlit)
+- [10. Future Work](#10-future-work)
 
 ---
 
@@ -178,6 +180,7 @@ Exploratory Data Analysis was conducted in the following notebooks:
 
 * [EDA 01 – Dataset overview and label distribution](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/steel-defect-detection-eda-01.ipynb)
 * [EDA 02 – Image analysis](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/steel-defect-detection-eda-02.ipynb)
+* [EDA 03 – Defect Center Location](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/steel-defect-detection-eda-03.ipynb)
 
 
 ### 4.1. Data Overview
@@ -331,6 +334,50 @@ All images are dominated by black and gray tones, reflecting the uniform texture
 ![Color Distribution](images/006-color-distribution.png)
 
 This limited color variation suggests that texture and structural patterns, rather than color.
+
+
+### 4.7. Defect Center Location
+
+For each segmented defect, the bounding box coordinates (x1,y1,x2,y2) are computed.
+From these values, the center of the bounding box is calculated as:
+```
+xc = x1 + (x2 - x1) / 2
+yc = y1 + (y2 - y1) / 2
+```
+The distributions of x-center (xc) and y-center (yc) are then plotted for each ClassId to analyze the typical spatial locations of defects along the steel strip.
+
+![Defect Center Location](images/008-defect-location-distribution.png)
+
+
+Observations by Class:
+* Class 1
+    The x-center is strongly concentrated around the middle of the image (≈ 125), with remaining values spread across the width.
+    The y-center shows clusters, primarily around: 
+    - 300–500
+    - ~750
+    - ~1400
+    Most defects appear below y = 600, indicating most defect is in area between 0-600.
+
+* Class 2
+    The x-center distribution is similar to Class 1, centered around ≈ 125.
+    The y-center is clearly separete, with clusters around:
+    - 0–200
+    - 400–500
+    - 800–1000
+    - 1400–1600
+    The strongest concentration is near y ≈ 1550, suggesting defects often occur near the right side of the strip.
+
+* Class 3
+    The x-center again peaks around the image center.
+    The y-center is broadly distributed across the entire height (0–1600).
+
+* Class 4
+    Similar to Class 3, the x-center is centered around ≈ 125.
+    The y-center shows a wide and fairly uniform distribution over the full image height.
+
+Class 1 defects tend to occur in the left regions of the strip.
+Class 2 defects show distinct grouping, like multiple defect formation zones.
+Class 3 and Class 4 have similar spatial distributions, with defects occurring across the strip.
 
 
 
@@ -895,7 +942,34 @@ Python script:
 
 
 
-## 9. Future Work
+## 9. Web UI with Streamlit
+In this section, instead of calling the API directly, a simple Streamlit web application is provided.
+The Streamlit app acts as a lightweight frontend that communicates with the Cloud Run inference API.
+The app allows users to upload an image through a web interface, sends the image to the deployed Cloud Run service, and displays the prediction result.
+
+### Running the Streamlit App
+The Streamlit dependency is already included in pyproject.toml.
+Run the app locally with:
+```
+uv run streamlit run streamlit-app.py
+```
+
+The application will be available at:
+```
+http://localhost:8501
+```
+
+
+![Streamlit App](images/013-streamlit-app.png)
+
+
+Python script:
+* [streamlit-app.py](https://github.com/mlpub/steel-defect-detection-s1/blob/main/src/streamlit-app.py)
+
+
+
+
+## 10. Future Work
 Several improvements and extensions are planned to further enhance this project:
 
 1. Improve Stage 1 Binary Classification Performance
@@ -911,7 +985,6 @@ Several improvements and extensions are planned to further enhance this project:
    * Combine the binary classification and defect segmentation stages into a single end-to-end inference pipeline.
 
 4. Explore Cloud Run in More Detail
-   * Optimize performance, scalability, and cost efficiency.
 
 
 Overall, this future work aims to evolve the project from a proof-of-concept into a more complete and production-ready steel surface defect detection system.
