@@ -441,6 +441,8 @@ Model Architecture:
 - Flatten layer: self.flatten(x)
 - Classification layer: self.fc(x)  #(5120,1024)->Dropout(0.3)->Relu->(1024,1)
 
+![E1-6 Result](images/009-e1-6-result.png)
+
 Notebook link: [Experiment E1-6](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-6.ipynb)
 
 
@@ -463,6 +465,8 @@ Model Architecture:
 - Global Average: self.globalavg(x) # (2,2)
 - Flatten layer: self.flatten(x)
 - Classification layer self.fc(x) # (5120,512)->Dropout(0.5)->Relu->(512,1)
+
+![E1-9 Result](images/009-e1-9-result.png)
 
 Notebook link: [Experiment E1-9](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-9.ipynb)
 
@@ -487,6 +491,10 @@ Model Architecture:
 - Flatten layer: self.flatten(x)
 - Classification layer self.fc(x) # (5120,512)->Dropout(0.5)->Relu->(512,1)
 
+![E1-15 Result](images/009-e1-15-result.png)
+
+Notebook link: [Experiment E1-15](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-15.ipynb)
+
 
 #### Experiment Result Summary
 
@@ -509,8 +517,6 @@ Confusion Matrix (Validation):
 
 **Model Selection**
 Based on the validation results, E1-15 achieves the best overall performance, with the highest F1 score and ROC-AUC while maintaining strong recall, which is critical for defect detection tasks. Therefore, E1-15 is selected as the final MobileNet V2 configuration.
-
-Notebook link: [Experiment E1-15](https://github.com/mlpub/steel-defect-detection-s1/blob/main/notebooks/stage1-binary-classification-e1-15.ipynb)
 
 
 
@@ -762,12 +768,15 @@ Python script:
 
 Docker file:
 * [dockerfile](https://github.com/mlpub/steel-defect-detection-s1/blob/main/dockerfile)
-* [-serverless](https://github.com/mlpub/steel-defect-detection-s1/blob/main/dockerfile-serverless)
+* [dockerfile-serverless](https://github.com/mlpub/steel-defect-detection-s1/blob/main/dockerfile-serverless)
+
+
 
 
 ## 8. Deploy on Google Cloud (Cloud Run)
 
-Google Cloud Run is serverless like Lambda, but architecturally it is container-based.
+Google Cloud Run is serverless like Lambda, but architecturally it is container-based. 
+Register to Google Cloud first.
 Note: This project was deployed using Google Cloud SDK version **550.0.0**. Future versions may have slight differences in CLI behavior.
 
 
@@ -973,7 +982,7 @@ Python script:
 Several improvements and extensions are planned to further enhance this project:
 
 1. Improve Stage 1 Binary Classification Performance
-   * Experiment with more advanced model architectures and fine-tuning strategies.
+   * Experiment with other model architectures and fine-tuning.
    * Explore tile-based training and inference by dividing high-resolution steel images into overlapping patches, reducing aspect ratio distortion and improving sensitivity to small defects.
 
 2. Stage 2: Defect Type Classification and Segmentation
