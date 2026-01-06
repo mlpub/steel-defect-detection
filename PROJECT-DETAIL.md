@@ -36,9 +36,13 @@
 
 ## 1. Introduction
 
-In manufacturing, product quality control is an important part of the production process. Before products are shipped to customers, inspection is required to make sure the quality and specifications meet customer requirements. In steel manufacturing, defects on the steel surface can reduce product quality and cause customer complaints.
+## 1. Introduction
 
-To improve the inspection process, this project uses a camera to capture images of steel surfaces and applies machine learning to analyze the images. The model predicts whether the steel has a defect and provides a probability score. This helps operators more easily identify and mark defective steel, making the inspection process faster and more consistent.
+In manufacturing, product quality control is an important part of the production process. Before products are shipped to customers, inspections are required to ensure that quality and specifications meet customer requirements. In steel manufacturing, surface defects can reduce product quality and lead to customer complaints.
+
+Due to the high speed and continuous nature of steel production, manual inspection is not practical. Therefore, cameras are installed at the production line output to capture images of steel surfaces for inspection.
+
+To improve the inspection process, this project applies machine learning to analyze the captured steel surface images. The model predicts whether a steel surface contains defects and provides a probability score. This helps operators identify and mark defective steel more efficiently, making the inspection process faster, more consistent, and objective.
 
 System Overview
 

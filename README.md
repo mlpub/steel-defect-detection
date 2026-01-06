@@ -8,9 +8,21 @@ For full technical details, experiments, and deployment steps, see:
 
 ---
 
-## 1. Project Overview
+## 1. Problem Description and Project Overview
 
-Steel surface inspection is critical for quality control in manufacturing. Manual inspection is slow and error-prone. This project uses computer vision to automate defect detection from images, helping operators quickly identify defective steel.
+In manufacturing, product quality control is a critical part of the production process. Before products are shipped to customers, inspections are required to ensure that quality and specifications meet customer requirements. In steel manufacturing, surface defects can reduce product quality and lead to customer complaints.
+
+Due to the high speed and continuous nature of steel production, manual inspection is not practical. Therefore, cameras are installed at the production line output to capture images of steel surfaces for automated inspection.
+
+To address this problem, this project applies machine learning to analyze captured steel surface images. This approach helps operators identify and mark defective steel more efficiently, making the inspection process faster, more consistent, and objective.
+
+The complete system is designed as a two-stage pipeline.  
+- Stage 1 performs binary classification to determine whether a steel surface is defective or non-defective.  
+- Stage 2 (future work) further classifies the defect type and localizes the defect region using segmentation.
+
+This project focuses on Stage 1, which establishes a solid baseline by detecting defective steel images using binary classification. Stage 2 will be developed in future work.
+
+
 
 Main steps:
 * Data exploration & preprocessing
