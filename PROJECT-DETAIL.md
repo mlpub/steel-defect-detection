@@ -36,8 +36,6 @@
 
 ## 1. Introduction
 
-## 1. Introduction
-
 In manufacturing, product quality control is an important part of the production process. Before products are shipped to customers, inspections are required to ensure that quality and specifications meet customer requirements. In steel manufacturing, surface defects can reduce product quality and lead to customer complaints.
 
 Due to the high speed and continuous nature of steel production, manual inspection is not practical. Therefore, cameras are installed at the production line output to capture images of steel surfaces for inspection.
@@ -1001,6 +999,7 @@ Several improvements and extensions are planned to further enhance this project:
 
 
 Overall, this future work aims to evolve the project from a proof-of-concept into a more complete and production-ready steel surface defect detection system.
+
 
 
 
