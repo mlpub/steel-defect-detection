@@ -1,4 +1,3 @@
-from qtpy import API_NAME
 import streamlit as st
 from PIL import Image
 import base64
